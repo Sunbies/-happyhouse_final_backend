@@ -1,5 +1,8 @@
 package com.ssafy.sunbis.model.dto;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel("멤버")
 public class MemberDto {
 	private String id;
 	private String password;
