@@ -17,7 +17,7 @@ class SunbisApplicationTests {
 	@Test
 	void mapperTest() {
 		assertNotNull(mMapper);
-		System.out.println(mMapper.selectAll());
+		System.out.println(mMapper.login("admin", "admin"));
 	}
 
 }

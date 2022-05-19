@@ -2,17 +2,17 @@ package com.ssafy.sunbis.model.dto;
 
 public class MemberDto {
 	private String id;
-	private String pasword;
+	private String password;
 	private String name;
 	private int isadmin;
 	private String phone;
 	public MemberDto() {
 		super();
 	}
-	public MemberDto(String id, String pasword, String name, int isadmin, String phone) {
+	public MemberDto(String id, String password, String name, int isadmin, String phone) {
 		super();
 		this.id = id;
-		this.pasword = pasword;
+		this.password = password;
 		this.name = name;
 		this.isadmin = isadmin;
 		this.phone = phone;
@@ -23,11 +23,11 @@ public class MemberDto {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getPasword() {
-		return pasword;
+	public String getPassword() {
+		return password;
 	}
-	public void setPasword(String pasword) {
-		this.pasword = pasword;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public String getName() {
 		return name;
@@ -49,7 +49,7 @@ public class MemberDto {
 	}
 	@Override
 	public String toString() {
-		return "MemberDto [id=" + id + ", pasword=" + pasword + ", name=" + name + ", isadmin=" + isadmin + ", phone="
+		return "MemberDto [id=" + id + ", password=" + password + ", name=" + name + ", isadmin=" + isadmin + ", phone="
 				+ phone + "]";
 	}
 }
