@@ -6,18 +6,36 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.ssafy.sunbis.model.mapper.MemberMapper;
+import com.ssafy.sunbis.model.mapper.PostMapper;
 
 @SpringBootTest
 class SunbisApplicationTests {
 	
 	@Autowired
-	MemberMapper mMapper;
+	PostMapper p;
 
 	@Test
 	void mapperTest() {
-		assertNotNull(mMapper);
-		System.out.println(mMapper.login("admin", "admin"));
+		assertNotNull(p);
+		System.out.println(p.select(5));
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
