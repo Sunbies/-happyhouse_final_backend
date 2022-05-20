@@ -29,25 +29,24 @@ import io.swagger.annotations.ApiParam;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
-	
+
 	public static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
-	
+
 	private final MemberService memberService;
 	private final JwtService jwtService;
-	
+
 	@Autowired
 	public MemberController(MemberService memberService, JwtService jwtService) {
 		this.memberService = memberService;
 		this.jwtService = jwtService;
 	}
-	
+
 	@ApiOperation(value = "로그인", notes = "Access-token과 로그인 결과 메시지를 반환", response = Map.class)
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody
-			@ApiParam(value = "{\"id\": String, \"password\": String}"
-			, required = true) Map<String, String> request) {
+	public ResponseEntity<?> login(
+			@RequestBody @ApiParam(value = "{\"id\": String, \"password\": String}", required = true) Map<String, String> request) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
@@ -99,17 +98,3 @@ public class MemberController {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
