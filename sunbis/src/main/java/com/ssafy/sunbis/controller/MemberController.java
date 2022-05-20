@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -41,6 +42,30 @@ public class MemberController {
 	public MemberController(MemberService memberService, JwtService jwtService) {
 		this.memberService = memberService;
 		this.jwtService = jwtService;
+	}
+	
+	@ApiOperation(value = "유저 체크", notes = "id와 password를 받아서 그런 유저가 있는지 확인", response = Map.class)
+	@PostMapping("/check")
+	public ResponseEntity<?> checkUser(@RequestBody
+			@ApiParam(value = "{\"id\": String, \"password\": String}"
+			, required = true) Map<String, String> request) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
+		try {
+			MemberDto loginUser = memberService.login(request.get("id"), request.get("password"));
+			if (loginUser != null) {
+				resultMap.put("message", SUCCESS);
+				status = HttpStatus.ACCEPTED;
+			} else {
+				resultMap.put("message", FAIL);
+				status = HttpStatus.ACCEPTED;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
 	@ApiOperation(value = "로그인", notes = "Access-token과 로그인 결과 메시지를 반환", response = Map.class)
@@ -97,19 +122,55 @@ public class MemberController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
+	
+	@ApiOperation(value = "회원가입", response = Map.class)
+	@PostMapping
+	public ResponseEntity<?> insert(@RequestBody
+			@ApiParam(value = "MemberDto"
+			, required = true) MemberDto member){
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
+		try {
+			if (memberService.insert(member)) {
+				logger.debug("회원가입 성공 : {}", member);
+				resultMap.put("message", SUCCESS);
+				status = HttpStatus.ACCEPTED;
+			} else {
+				logger.debug("회원가입 실패 : {}", member);
+				resultMap.put("message", FAIL);
+				status = HttpStatus.ACCEPTED;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
+	@ApiOperation(value = "회원수정", response = Map.class)
+	@PutMapping
+	public ResponseEntity<?> update(@RequestBody
+			@ApiParam(value = "MemberDto"
+			, required = true) MemberDto member){
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
+		try {
+			if (memberService.update(member)) {
+				logger.debug("회원가입 성공 : {}", member);
+				resultMap.put("message", SUCCESS);
+				status = HttpStatus.ACCEPTED;
+			} else {
+				logger.debug("회원가입 실패 : {}", member);
+				resultMap.put("message", FAIL);
+				status = HttpStatus.ACCEPTED;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
