@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.sunbis.model.mapper.PostMapper">
+
+	<sql id="search">
+		<if test="word != null and word != ''">
+			<if test="key == 'title'">
+				and title like concat('%', #{word}, '%')
+			</if>
+			<if test="key != 'title'">
+				and ${key} = #{word}
+			</if>
+		</if>
+	</sql>
+
+	<select id="list" parameterType="map" resultType="postDto">
+		select p.postno, p.boardtype, p.writer, p.title, p.cdate, (
+			select m.name
+			from member m
+			where m.id = p.writer
+		) as writerName, (
+			select count(l.postno)
+		    from postlike l
+		    where l.postno = p.postno
+		    and l.position = 1
+		) as likeCount, (
+			select count(r.replyno)
+		    from reply r
+		    where r.postno = p.postno
+		) as replyCount
+		from (
+			select postno, boardtype, writer, title, cdate
+		    from post
+			where boardtype = #{boardtype}
+			<include refid="search" />
+		) p
+		order by ${orderby} ${order}
+		limit #{start}, #{cpp}
+	</select>
+	
+	<resultMap type="postDto" id="postDetail">
+		<result column="postno" property="postno" />
+		<result column="boardtype" property="boardtype" />
+		<result column="writer" property="writer" />
+		<result column="writerName" property="writerName" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="cdate" property="cdate" />
+		<result column="likeCount" property="likeCount" />
+		<result column="dislikeCount" property="dislikeCount" />
+		<result column="replyCount" property="replyCount" />
+		<collection property="replyList" column="postno=postno"
+				javaType="list" ofType="replyDto" select="replyList" />
+	</resultMap>
+	
+	<select id="select" resultMap="postDetail">
+		select p.postno, p.boardtype, p.writer, p.title, p.content, p.cdate, (
+			select m.name
+    		from member m
+    		where p.writer = m.id
+		) as writerName, (
+			select count(l.postno)
+    		from postlike l
+    		where l.postno = p.postno
+    		and l.position = 1
+		) as likeCount, (
+			select count(l.postno)
+    		from postlike l
+    		where l.postno = p.postno
+    		and l.position = -1
+		) as dislikeCount, (
+			select count(r.replyno)
+    		from reply r
+    		where r.postno = p.postno
+		) as replyCount
+		from (
+			select postno, boardtype, writer, title, content, cdate
+    		from post
+    		where postno = #{postno}
+		) p
+	</select>
+	
+	<select id="replyList" resultType="replyDto">
+		select r.replyno, r.postno, r.writer, r.content, r.cdate, (
+			select m.name
+			from member m
+			where r.writer = m.id
+		) as writerName
+		from (
+			select r.replyno, r.postno, r.writer, r.content, r.cdate
+			from reply r join post p
+			on r.postno = p.postno
+			where p.postno = #{postno}
+		) r
+	</select>
+	
+	<insert id="insert" parameterType="postDto">
+		insert into post (boardtype, writer, title, content)
+		values (#{boardtype}, #{writer}, #{title}, #{content})
+	</insert>
+	
+	<update id="update" parameterType="postDto">
+		update post set
+		title = #{title}, content = #{content}
+		where postno = #{postno}
+	</update>
+	
+	<delete id="delete">
+		delete from post
+		where postno = #{postno}
+	</delete>
+	
+</mapper>
