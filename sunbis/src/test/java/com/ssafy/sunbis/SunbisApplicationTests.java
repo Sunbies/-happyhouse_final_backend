@@ -2,6 +2,9 @@ package com.ssafy.sunbis;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +20,8 @@ class SunbisApplicationTests {
 	@Test
 	void mapperTest() {
 		assertNotNull(p);
-		System.out.println(p.select(5));
+
+		System.out.println(p.likeCounts(9));
 	}
 
 }
