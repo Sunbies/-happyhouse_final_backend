@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.ssafy.sunbis.model.dto.PostDto;
 import com.ssafy.sunbis.model.mapper.PostMapper;
 
 @SpringBootTest
@@ -19,9 +20,6 @@ class SunbisApplicationTests {
 
 	@Test
 	void mapperTest() {
-		assertNotNull(p);
-
-		System.out.println(p.likeCounts(9));
 	}
 
 }

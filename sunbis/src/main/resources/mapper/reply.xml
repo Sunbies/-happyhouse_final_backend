@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.sunbis.model.mapper.ReplyMapper">
+	
+	<insert id="insert" parameterType="replyDto">
+		insert into reply (postno, writer, content)
+		values (#{postno}, #{writer}, #{content})
+	</insert>
+	
+	<update id="update" parameterType="replyDto">
+		update reply set
+		content = #{content}
+		where replyno = #{replyno}
+	</update>
+	
+	<delete id="delete">
+		delete from reply
+		where replyno = #{replyno}
+	</delete>
+	
+</mapper>
