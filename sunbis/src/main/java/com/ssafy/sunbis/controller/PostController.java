@@ -209,20 +209,3 @@ public class PostController {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
