@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.ssafy.sunbis.model.dto.PostDto;
 import com.ssafy.sunbis.model.mapper.PostMapper;
 
+@Service
 public class PostServiceImpl implements PostService {
 	
 	private final PostMapper postMapper;
@@ -21,11 +23,8 @@ public class PostServiceImpl implements PostService {
 	@Override
 	public List<PostDto> list(Map<String, String> map) throws Exception {
 		Map<String, Object> param = new HashMap<String, Object>();
-		
-		String key = map.get("key");
-		param.put("key", key == null ? "" : key);
-		String word = map.get("word");
-		param.put("word", word == null ? "" : word);
+
+		param.putAll(map);
 		
 		String orderby = map.get("orderby");
 		param.put("orderby", orderby == null ? "postno" : orderby);

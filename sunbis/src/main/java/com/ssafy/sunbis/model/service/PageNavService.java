@@ -5,5 +5,5 @@ import java.util.Map;
 import com.ssafy.sunbis.model.dto.PageNavDto;
 
 public interface PageNavService {
-	PageNavDto getPageNav(Map<String, String> map);
+	PageNavDto getPageNav(Map<String, String> map) throws Exception;
 }

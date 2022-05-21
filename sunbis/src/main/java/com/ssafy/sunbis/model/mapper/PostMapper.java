@@ -19,9 +19,12 @@ public interface PostMapper {
 	 * boardtype, orderby(칼럼명), order(asc, desc), start, cpp
 	 * 
 	 * map이 포함할 수 있는 것:
-	 * key, word (어느 하나라도 포함되려면 둘 모두 포함돼야 함)
+	 * key, word
 	 * 
-	 * @param map
+	 * orderby에 가능한 칼럼명:
+	 * postno, boardtype, writer, title, cdate, writerName, likeCount, replyCount
+	 * 
+	 * @param map (값 타입이 Object인 이유: start, cpp가 int가 아니면 오류 발생)
 	 * @return post list
 	 */
 	List<PostDto> list(Map<String, Object> map);

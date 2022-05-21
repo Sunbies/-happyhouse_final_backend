@@ -15,10 +15,13 @@
 		</if>
 	</sql>
 	
-	<select id="getTotalCount" parameterType="map" resultType="int">
+	<select id="getTotalCount" parameterType="map" resultType="_int">
 		select count(${ pk })
 		from ${ table }
 		<where>
+			<if test="table == 'post'">
+				and boardtype = #{boardtype}
+			</if>
 			<include refid="search"></include>
 		</where>
 	</select>
