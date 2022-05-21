@@ -8,13 +8,17 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface PageNavMapper {
+	
 	/**
-	 * {
-	 *   table: 테이블명,
-	 *   pk: 프라이머리 키 칼럼명,
-	 *   key: 칼럼명 (where절에 들어감, title의 경우 like 적용),
-	 *   word: 값 (Null 또는 ""일 경우 where절 없음)
-	 * }
+	 * table: 테이블명,
+	 * pk: 프라이머리 키 칼럼명,
+	 * key: 칼럼명,
+	 * word: 값,
+	 * 
+	 * boardtype: table이 "post"인 경우 적용되는 boardtype
+	 * 
+	 * @param map
+	 * @return total count
 	 */
 	int getTotalCount(Map<String, String> map);
 }

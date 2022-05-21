@@ -49,7 +49,12 @@ public class MemberController {
 	@ApiOperation(value = "유저 체크", notes = "id와 password를 받아서 그런 유저가 있는지 확인", response = Map.class)
 	@PostMapping("/check")
 	public ResponseEntity<?> checkUser(
+<<<<<<< HEAD
 			@RequestBody @ApiParam(value = "{\"id\": String, \"password\": String}", required = true) Map<String, String> request) {
+=======
+			@ApiParam("{\"id\": String, \"password\": String}")
+			@RequestBody Map<String, String> request) {
+>>>>>>> 4e525ea0f9c78020de17bdb0ed1b605dc8918cf3
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
@@ -72,7 +77,12 @@ public class MemberController {
 	@ApiOperation(value = "비밀번호 찾기", notes = "id와 phone을 받아서 user 객체를 반환", response = Map.class)
 	@PostMapping("/findpassword")
 	public ResponseEntity<?> checkForPassword(
+<<<<<<< HEAD
 			@RequestBody @ApiParam(value = "{\"id\": String, \"phone\": String}", required = true) Map<String, String> request) {
+=======
+			@ApiParam("{\"id\": String, \"phone\": String}")
+			@RequestBody Map<String, String> request) {
+>>>>>>> 4e525ea0f9c78020de17bdb0ed1b605dc8918cf3
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
@@ -96,7 +106,12 @@ public class MemberController {
 	@ApiOperation(value = "로그인", notes = "Access-token과 로그인 결과 메시지를 반환", response = Map.class)
 	@PostMapping("/login")
 	public ResponseEntity<?> login(
+<<<<<<< HEAD
 			@RequestBody @ApiParam(value = "{\"id\": String, \"password\": String}", required = true) Map<String, String> request) {
+=======
+			@ApiParam("{\"id\": String, \"password\": String}")
+			@RequestBody Map<String, String> request) {
+>>>>>>> 4e525ea0f9c78020de17bdb0ed1b605dc8918cf3
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
@@ -122,7 +137,7 @@ public class MemberController {
 	@ApiOperation(value = "회원인증", notes = "회원 정보를 담은 Token을 반환", response = Map.class)
 	@GetMapping("/info/{id}")
 	public ResponseEntity<Map<String, Object>> getInfo(
-			@PathVariable("id") @ApiParam(value = "인증할 회원의 아이디", required = true) String id,
+			@PathVariable("id") @ApiParam("인증할 회원의 아이디") String id,
 			HttpServletRequest request) {
 		logger.debug("userid : {} ", id);
 		Map<String, Object> resultMap = new HashMap<>();
@@ -149,7 +164,12 @@ public class MemberController {
 
 	@ApiOperation(value = "회원가입", response = Map.class)
 	@PostMapping
+<<<<<<< HEAD
 	public ResponseEntity<?> insert(@RequestBody @ApiParam(value = "MemberDto", required = true) MemberDto member) {
+=======
+	public ResponseEntity<?> insert(@RequestBody
+			@ApiParam("MemberDto") MemberDto member){
+>>>>>>> 4e525ea0f9c78020de17bdb0ed1b605dc8918cf3
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
@@ -172,7 +192,12 @@ public class MemberController {
 
 	@ApiOperation(value = "회원수정", response = Map.class)
 	@PutMapping
+<<<<<<< HEAD
 	public ResponseEntity<?> update(@RequestBody @ApiParam(value = "MemberDto", required = true) MemberDto member) {
+=======
+	public ResponseEntity<?> update(@RequestBody
+			@ApiParam("MemberDto") MemberDto member){
+>>>>>>> 4e525ea0f9c78020de17bdb0ed1b605dc8918cf3
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
@@ -195,7 +220,12 @@ public class MemberController {
 
 	@ApiOperation(value = "회원탈퇴", response = Map.class)
 	@DeleteMapping("/{id}")
+<<<<<<< HEAD
 	public ResponseEntity<?> delete(@PathVariable("id") @ApiParam(value = "id as String", required = true) String id) {
+=======
+	public ResponseEntity<?> delete(@PathVariable("id")
+			@ApiParam("id as String") String id){
+>>>>>>> 4e525ea0f9c78020de17bdb0ed1b605dc8918cf3
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
@@ -218,7 +248,7 @@ public class MemberController {
 
 	@ApiOperation(value = "회원 목록", notes = "회원 목록을 반환", response = Map.class)
 	@GetMapping
-	public ResponseEntity<Map<String, Object>> getInfo() {
+	public ResponseEntity<Map<String, Object>> list() {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
@@ -230,6 +260,31 @@ public class MemberController {
 				status = HttpStatus.ACCEPTED;
 			} else {
 				logger.debug("회원 목록 조회 실패");
+				resultMap.put("message", FAIL);
+				status = HttpStatus.ACCEPTED;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+
+	@ApiOperation(value = "회원 조회", notes = "회원을 반환", response = Map.class)
+	@GetMapping("/{id}")
+	public ResponseEntity<Map<String, Object>> select(@PathVariable("id") String id) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
+		try {
+			MemberDto user = memberService.select(id);
+			if (user != null) {
+				logger.debug("회원 조회 성공");
+				resultMap.put("user", user);
+				resultMap.put("message", SUCCESS);
+				status = HttpStatus.ACCEPTED;
+			} else {
+				logger.debug("회원 조회 실패");
 				resultMap.put("message", FAIL);
 				status = HttpStatus.ACCEPTED;
 			}

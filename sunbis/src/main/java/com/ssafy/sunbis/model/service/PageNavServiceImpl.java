@@ -19,16 +19,17 @@ public class PageNavServiceImpl implements PageNavService {
 	}
 
 	@Override
-	public PageNavDto getPageNav(Map<String, String> map) {
+	public PageNavDto getPageNav(Map<String, String> map) throws Exception {
 		PageNavDto pageNav = new PageNavDto();
 		
 		int navSize = 10;
 		int currentPageNo = Integer.parseInt(map.get("pg"));
-		int countPerPage = Integer.parseInt(map.get("spp"));
+		int countPerPage = Integer.parseInt(map.get("cpp"));
 		int totalCount = pageNavMapper.getTotalCount(map);
 		int totalPageCount = (totalCount - 1) / countPerPage + 1;
 		int startPageNo = (currentPageNo - 1) / navSize * navSize + 1;
 		int endPageNo = startPageNo + navSize - 1;
+		if(endPageNo > totalPageCount) endPageNo = totalPageCount;
 		
 		pageNav.setCurrentPageNo(currentPageNo);
 		pageNav.setStartPageNo(startPageNo);

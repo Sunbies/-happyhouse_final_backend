@@ -112,4 +112,53 @@
 		where postno = #{postno}
 	</delete>
 	
+	<select id="likeCounts" resultType="map">
+		select
+		count(case when position = 1 then 1 end) as likeCount,
+		count(case when position = -1 then 1 end) as dislikeCount
+		from postlike
+		where postno = #{postno}
+	</select>
+	
+	<select id="selectLike" parameterType="map" resultType="_int">
+		select ifnull((
+			select l.position
+			from member m left join postlike l
+			on m.id = l.memberid
+			where m.id = #{id} and l.postno = #{postno}
+		), 0) as position
+	</select>
+	
+	<insert id="insertLike" parameterType="map">
+		insert into postlike (memberid, postno, position)
+		values (#{id}, #{postno}, #{position})
+	</insert>
+	
+	<update id="updateLike" parameterType="map">
+		update postlike
+		set position = #{position}
+		where memberid = #{id} and postno = #{postno}
+	</update>
+	
+	<delete id="deleteLike" parameterType="map">
+		delete from postlike
+		where memberid = #{id} and postno = #{postno}
+	</delete>
+	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
