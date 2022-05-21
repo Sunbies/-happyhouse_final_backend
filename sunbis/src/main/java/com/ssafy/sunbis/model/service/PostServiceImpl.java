@@ -39,23 +39,25 @@ public class PostServiceImpl implements PostService {
 		
 		return postMapper.list(param);
 	}
+
+	@Override
+	public PostDto select(int postno) throws Exception {
+		return postMapper.select(postno);
+	}
+
+	@Override
+	public boolean insert(PostDto post) throws Exception {
+		return postMapper.insert(post) == 1;
+	}
+
+	@Override
+	public boolean update(PostDto post) throws Exception {
+		return postMapper.update(post) == 1;
+	}
+
+	@Override
+	public boolean delete(int postno) throws Exception {
+		return postMapper.delete(postno) == 1;
+	}
+	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
