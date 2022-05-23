@@ -28,7 +28,7 @@ public class PostServiceImpl implements PostService {
 		
 		String orderby = map.get("orderby");
 		param.put("orderby", orderby == null ? "postno" : orderby);
-		param.put("order", "desc".equals(map.get("order")) ? "desc" : "asc");
+		param.put("order", "asc".equals(map.get("order")) ? "asc" : "desc");
 		
 		int currentPageNo = Integer.parseInt(map.get("pg"));
 		int countPerPage = Integer.parseInt(map.get("cpp"));

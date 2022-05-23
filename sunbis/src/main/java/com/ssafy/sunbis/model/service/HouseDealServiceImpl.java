@@ -1,6 +1,8 @@
 package com.ssafy.sunbis.model.service;
 
+
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,32 @@ public class HouseDealServiceImpl implements HouseDealService {
 	@Override
 	public List<HouseInfoDto> getHouseDealInfo(String dongCode) {
 		return houseDealMapper.getHouseDealInfo(dongCode);
+	}
+
+	@Override
+	public List<HouseInfoDto> getHouseDealInfo2(Map<String, String> map, Map<String, Object> params) {
+		params.putAll(map);
+		
+		String orderby = map.get("orderby");
+		params.put("orderby", orderby == null ? "no" : orderby);
+		params.put("order", "asc".equals(map.get("order")) ? "asc" : "desc");
+		
+		String apartmentName = map.get("aptname");
+		params.put("apartmentName", apartmentName == null ? "" : apartmentName);
+		
+		int currentPageNo = Integer.parseInt(map.get("pg"));
+		int countPerPage = Integer.parseInt(map.get("cpp"));
+		int start = (currentPageNo - 1) * countPerPage;
+		
+		params.put("start", start);
+		params.put("cpp", countPerPage);
+		
+		return houseDealMapper.getHouseDealInfo2(params);
+	}
+
+	@Override
+	public int getTotalCount(Map<String, Object> params) {
+		return houseDealMapper.getTotalCount(params);
 	}
 
 	@Override

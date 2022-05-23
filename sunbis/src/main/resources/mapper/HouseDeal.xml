@@ -61,5 +61,46 @@
 	</select>
 
 
+	<select id="getHouseDealInfo2" parameterType="map" resultType="HouseInfoDto">
+		select
+		i.aptCode,       i.apartmentName, o.sidoName,      o.gugunName,
+		o.dongCode,      i.dong,          i.jibun,         i.roadName,
+		i.buildYear,     i.lng,           i.lat,           d.no,
+		d.dealAmount,    d.dealYear,      d.dealMonth,     d.dealDay,
+		d.area,          d.floor
+		from housedeal as d
+		left join houseinfo as i on d.aptCode = i.aptCode
+		left join dongcode as o on o.dongCode = i.dongCode
+		where i.dongcode = #{dongCode}
+		<if test="apartmentName != null and apartmentName != ''">
+			and apartmentName like concat('%', #{apartmentName}, '%')
+		</if>
+		<if test="orderby == 'no'">
+			order by no ${order}
+		</if>
+		<if test="orderby == 'buildYear'">
+			order by buildYear ${order}
+		</if>
+		<if test="orderby == 'dealAmount'">
+			order by dealAmount ${order}
+		</if>
+		<if test="orderby == 'dealDate'">
+			order by dealYear ${order}, dealMonth ${order}, dealDay ${order}
+		</if>
+		limit #{start}, #{cpp}
+	</select>
+
+	<select id="getTotalCount" parameterType="map" resultType="_int">
+		select count(d.no)
+		from housedeal as d
+		left join houseinfo as i on d.aptCode = i.aptCode
+		left join dongcode as o on o.dongCode = i.dongCode
+		where i.dongcode = #{dongCode}
+		<if test="apartmentName != null and apartmentName != ''">
+			and apartmentName like concat('%', #{apartmentName}, '%')
+		</if>
+	</select>
+
+
 
 </mapper>
