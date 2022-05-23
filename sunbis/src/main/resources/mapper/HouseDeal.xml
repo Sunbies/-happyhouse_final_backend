@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.sunbis.model.mapper.HouseDealMapper">
+
+	<select id="getSido" resultType="SidoGugunDongDto">
+		select left(sidoCode,2)
+		sidoCode, sidoName
+		from sidocode
+		order by sidoCode
+	</select>
+
+	<select id="getGugunInSido" parameterType="string"
+		resultType="SidoGugunDongDto">
+		select left(gugunCode,5) gugunCode, gugunName
+		from guguncode
+		where left(gugunCode,2) = #{sido}
+		order by gugunCode
+	</select>
+	
+	<select id="getDongInGugun" parameterType="string"
+		resultType="SidoGugunDongDto">
+		select dongCode, dongName
+		from dongcode
+		where left(dongCode,5) = #{gugun}
+        and dongName is not null
+        order by dongCode
+	</select>
+
+	<select id="getHouseDealWithMonthInfo" resultType="HouseInfoDto">
+		select
+		i.aptCode,
+		i.apartmentName, o.sidoName, o.gugunName, o.dongCode,
+		i.dong, i.jibun,
+		i.roadName,
+		i.buildYear, i.lng, i.lat, d.no, d.dealAmount, d.dealYear,
+		d.dealMonth, d.dealDay,
+		d.area, d.floor from housedeal as d
+		left join
+		houseinfo as i on d.aptCode = i.aptCode
+		left join dongcode as o on
+		o.dongCode = i.dongCode
+		where i.dongcode = #{dongCode}
+		and d.dealYear =
+		#{year}
+		and d.dealMonth = #{month}
+	</select>
+	<select id="getHouseDealInfo" resultType="HouseInfoDto">
+		select i.aptCode,
+		i.apartmentName, o.sidoName, o.gugunName, o.dongCode,
+		i.dong, i.jibun, i.roadName,
+		i.buildYear, i.lng, i.lat, d.no, d.dealAmount, d.dealYear,
+		d.dealMonth, d.dealDay,
+		d.area, d.floor from housedeal as d
+		left join
+		houseinfo as i on d.aptCode = i.aptCode
+		left join dongcode as o on
+		o.dongCode = i.dongCode
+		where i.dongcode = #{dongCode}
+	</select>
+
+
+
+</mapper>
