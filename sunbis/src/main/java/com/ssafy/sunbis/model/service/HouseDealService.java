@@ -13,6 +13,8 @@ public interface HouseDealService {
 
 	List<HouseInfoDto> getHouseDealInfo2(Map<String, String> map, Map<String, Object> params);
 	
+	List<HouseInfoDto> getHouseDealInfoLatest4();
+	
 	int getTotalCount(Map<String, Object> params);
 
 	List<SidoGugunDongDto> getSido();

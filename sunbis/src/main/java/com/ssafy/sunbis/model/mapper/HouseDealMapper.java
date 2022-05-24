@@ -18,6 +18,8 @@ public interface HouseDealMapper {
 
 	List<HouseInfoDto> getHouseDealInfo2(Map<String, Object> map);
 	
+	List<HouseInfoDto> getHouseDealInfoLatest4();
+	
 	int getTotalCount(Map<String, Object> map);
 
 	List<SidoGugunDongDto> getSido();

@@ -100,7 +100,24 @@
 			and apartmentName like concat('%', #{apartmentName}, '%')
 		</if>
 	</select>
-
-
+	
+	<select id="getHouseDealInfoLatest4" resultType="HouseInfoDto">
+		select *
+		from (
+			select
+			i.aptCode,       i.apartmentName, o.sidoName,      o.gugunName,
+			o.dongCode,      i.dong,          i.jibun,         i.roadName,
+			i.buildYear,     i.lng,           i.lat,           d.no,
+			d.dealAmount,    d.dealYear,      d.dealMonth,     d.dealDay,
+			d.area,          d.floor
+			from housedeal as d
+			left join houseinfo as i on d.aptCode = i.aptCode
+			left join dongcode as o on o.dongCode = i.dongCode
+			order by no desc
+			limit 0, 1000
+		) as t
+		group by t.aptCode
+		limit 0, 4
+	</select>
 
 </mapper>

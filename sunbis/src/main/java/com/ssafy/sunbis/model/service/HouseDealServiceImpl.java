@@ -53,6 +53,11 @@ public class HouseDealServiceImpl implements HouseDealService {
 	}
 
 	@Override
+	public List<HouseInfoDto> getHouseDealInfoLatest4() {
+		return houseDealMapper.getHouseDealInfoLatest4();
+	}
+
+	@Override
 	public int getTotalCount(Map<String, Object> params) {
 		return houseDealMapper.getTotalCount(params);
 	}
