@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.sunbis.model.mapper.FavoriteMapper">
+	
+	<select id="list" parameterType="string" resultType="houseInfoDto">
+		select
+		i.aptCode,       i.apartmentName, o.sidoName,      o.gugunName,
+		o.dongCode,      i.dong,          i.jibun,         i.roadName,
+		i.buildYear,     i.lng,           i.lat,           d.no,
+		d.dealAmount,    d.dealYear,      d.dealMonth,     d.dealDay,
+		d.area,          d.floor
+		from houseinfo i
+		join favorite f on f.aptCode = i.aptCode
+		join housedeal d on d.aptCode = i.aptCode
+		join dongcode o on o.dongCode = i.dongCode
+		where f.memberid = #{id}
+		group by i.aptCode
+	</select>
+	
+	<select id="count" parameterType="_long" resultType="_int">
+		select count(f.aptCode)
+		from favorite f join houseinfo i on f.aptCode = i.aptCode
+		where f.aptCode = #{aptCode}
+	</select>
+	
+	<select id="check" parameterType="map" resultType="_long">
+		select ifnull((
+			select aptCode
+			from favorite
+			where memberid = #{id} and aptCode = #{aptCode}
+		), -1) as aptCode
+	</select>
+	
+	<insert id="insert" parameterType="map">
+		insert into favorite (memberid, aptCode)
+		values (#{id}, #{aptCode})
+	</insert>
+	
+	<delete id="delete" parameterType="map">
+		delete from favorite
+		where memberid = #{id} and aptCode = #{aptCode}
+	</delete>
+	
+</mapper>
