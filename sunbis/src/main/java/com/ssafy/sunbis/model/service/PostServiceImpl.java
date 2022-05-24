@@ -14,10 +14,14 @@ import com.ssafy.sunbis.model.mapper.PostMapper;
 public class PostServiceImpl implements PostService {
 	
 	private final PostMapper postMapper;
+	private final BadWordFilter badWordFilter;
 	
 	@Autowired
-	public PostServiceImpl(PostMapper postMapper) {
+	public PostServiceImpl(
+			PostMapper postMapper
+			, BadWordFilter badWordFilter) {
 		this.postMapper = postMapper;
+		this.badWordFilter= badWordFilter;
 	}
 	
 	@Override
@@ -47,17 +51,31 @@ public class PostServiceImpl implements PostService {
 
 	@Override
 	public boolean insert(PostDto post) throws Exception {
+		post.setTitle(badWordFilter.filter(post.getTitle()));
+		post.setContent(badWordFilter.filter(post.getContent()));
 		return postMapper.insert(post) == 1;
 	}
 
 	@Override
 	public boolean update(PostDto post) throws Exception {
+		post.setTitle(badWordFilter.filter(post.getTitle()));
+		post.setContent(badWordFilter.filter(post.getContent()));
 		return postMapper.update(post) == 1;
 	}
 
 	@Override
 	public boolean delete(int postno) throws Exception {
 		return postMapper.delete(postno) == 1;
+	}
+
+	@Override
+	public List<PostDto> listLatestPosts() throws Exception {
+		return postMapper.listLatestPosts();
+	}
+
+	@Override
+	public List<PostDto> listHotPosts() throws Exception {
+		return postMapper.listHotPosts();
 	}
 	
 }

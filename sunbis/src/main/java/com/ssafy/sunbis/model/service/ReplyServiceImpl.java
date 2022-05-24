@@ -10,19 +10,25 @@ import com.ssafy.sunbis.model.mapper.ReplyMapper;
 public class ReplyServiceImpl implements ReplyService {
 	
 	private final ReplyMapper replyMapper;
+	private final BadWordFilter badWordFilter;
 	
 	@Autowired
-	public ReplyServiceImpl(ReplyMapper replyMapper) {
+	public ReplyServiceImpl(
+			ReplyMapper replyMapper
+			, BadWordFilter badWordFilter) {
 		this.replyMapper = replyMapper;
+		this.badWordFilter = badWordFilter;
 	}
 
 	@Override
 	public boolean insert(ReplyDto reply) throws Exception {
+		reply.setContent(badWordFilter.filter(reply.getContent()));
 		return replyMapper.insert(reply) == 1;
 	}
 
 	@Override
 	public boolean update(ReplyDto reply) throws Exception {
+		reply.setContent(badWordFilter.filter(reply.getContent()));
 		return replyMapper.update(reply) == 1;
 	}
 

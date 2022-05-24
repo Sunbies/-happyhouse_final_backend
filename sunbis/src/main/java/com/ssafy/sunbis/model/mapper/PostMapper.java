@@ -102,4 +102,7 @@ public interface PostMapper {
 	 */
 	int deleteLike(Map<String, Object> map);
 	
+	List<PostDto> listLatestPosts();
+	List<PostDto> listHotPosts();
+	
 }

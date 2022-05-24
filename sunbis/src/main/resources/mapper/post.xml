@@ -145,6 +145,60 @@
 		where memberid = #{id} and postno = #{postno}
 	</delete>
 	
+	
+	
+	
+	
+	
+	
+	
+	<select id="listLatestPosts" resultType="postDto">
+		select p.postno, p.boardtype, p.writer, p.title, p.cdate, (
+			select m.name
+			from member m
+			where m.id = p.writer
+		) as writerName, (
+			select count(l.postno)
+			from postlike l
+			where l.postno = p.postno
+			and l.position = 1
+		) as likeCount, (
+			select count(r.replyno)
+			from reply r
+			where r.postno = p.postno
+		) as replyCount
+		from (
+			select postno, boardtype, writer, title, cdate
+			from post
+		) p
+		order by postno desc
+		limit 0, 3
+	</select>
+	
+	<select id="listHotPosts" resultType="postDto">
+		select p.postno, p.boardtype, p.writer, p.title, p.cdate, (
+			select m.name
+			from member m
+			where m.id = p.writer
+		) as writerName, (
+			select count(l.postno)
+			from postlike l
+			where l.postno = p.postno
+			and l.position = 1
+		) as likeCount, (
+			select count(r.replyno)
+			from reply r
+			where r.postno = p.postno
+		) as replyCount
+		from (
+			select postno, boardtype, writer, title, cdate
+			from post
+			where boardtype != 0
+		) p
+		order by likeCount desc
+		limit 0, 3
+	</select>
+	
 </mapper>
 
 

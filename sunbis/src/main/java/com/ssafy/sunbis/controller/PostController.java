@@ -39,7 +39,9 @@ public class PostController {
 	private final PageNavService pageNavService;
 	
 	@Autowired
-	public PostController(PostService postService, PageNavService pageNavService) {
+	public PostController(
+			PostService postService
+			, PageNavService pageNavService) {
 		this.postService = postService;
 		this.pageNavService = pageNavService;
 	}

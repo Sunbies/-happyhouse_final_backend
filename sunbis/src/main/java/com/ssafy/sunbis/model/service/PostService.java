@@ -13,4 +13,7 @@ public interface PostService {
 	boolean update(PostDto post) throws Exception;
 	boolean delete(int postno) throws Exception;
 	
+	List<PostDto> listLatestPosts() throws Exception;
+	List<PostDto> listHotPosts() throws Exception;
+	
 }
