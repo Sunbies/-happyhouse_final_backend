@@ -11,10 +11,10 @@ import com.ssafy.sunbis.model.dto.MemberDto;
 @Repository
 @Mapper
 public interface MemberMapper {
-	MemberDto login(@Param("id") String id, @Param("password") String password);
-	List<MemberDto> selectAll();
-	MemberDto select(String id);
-	int insert(MemberDto member);
-	int update(MemberDto member);
-	int delete(String id);
+	MemberDto login(@Param("id") String id, @Param("password") String password)throws Exception;
+	List<MemberDto> selectAll() throws Exception;
+	MemberDto select(String id)throws Exception;
+	int insert(MemberDto member)throws Exception;
+	int update(MemberDto member)throws Exception;
+	int delete(String id)throws Exception;
 }
