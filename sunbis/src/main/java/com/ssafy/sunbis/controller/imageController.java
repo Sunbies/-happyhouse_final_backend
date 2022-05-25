@@ -2,7 +2,6 @@ package com.ssafy.sunbis.controller;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.net.URLDecoder;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
