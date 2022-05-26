@@ -82,7 +82,7 @@
 			order by buildYear ${order}
 		</if>
 		<if test="orderby == 'dealAmount'">
-			order by dealAmount ${order}
+			order by cast(dealAmount as unsigned integer) ${order}
 		</if>
 		<if test="orderby == 'dealDate'">
 			order by dealYear ${order}, dealMonth ${order}, dealDay ${order}

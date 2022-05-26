@@ -16,17 +16,21 @@ import com.ssafy.sunbis.model.service.*;
 class SunbisApplicationTests {
 	
 	@Autowired
-	BadWordFilter f;
+	MemberMapper m;
+	
+	void test() throws Exception {
+		System.out.println("결과는 " + m.delete("arstttt"));
+	}
 
 	@Test
 	void mapperTest() {
-		assertNotNull(f);
-		long start, end;
-		String text, res;
-		
-		text = "";
-		System.out.println(f.filter(text));
-		System.out.println(text);
+//		assertNotNull(f);
+//		long start, end;
+//		String text, res;
+//		
+//		text = "";
+//		System.out.println(f.filter(text));
+//		System.out.println(text);
 		
 //		text = "법관은 헌법과 법률에 의하여 그 양심에 따라 독립하여 심판한다. 국무총리는 국무위원의 해임을 대통령에게 건의할 수 있다. 정기회의 회기는 100일을, 임시회의 회기는 30일을 초과할 수 없다. 군인 또는 군무원이 아닌 국민은 대한민국의 영역안에서는 중대한 군사상 기밀·초병·초소·유독음식물공급·포로·군용물에 관한 죄중 법률이 정한 경우와 비상계엄이 선포된 경우를 제외하고는 군사법원의 재판을 받지 아니한다.\r\n" + 
 //				"대법원과 각급법원의 조직은 법률로 정한다. 이 헌법은 1988년 2월 25일부터 시행한다. 다만, 이 헌법을 시행하기 위하여 필요한 법률의 제정·개정과 이 헌법에 의한 대통령 및 국회의원의 선거 기타 이 헌법시행에 관한 준비는 이 헌법시행 전에 할 수 있다. 대법원장의 임기는 6년으로 하며, 중임할 수 없다.\r\n" + 
